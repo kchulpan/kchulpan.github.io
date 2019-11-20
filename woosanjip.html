@@ -52,6 +52,13 @@
 	}
 	
 	</style>
+	
+	<script>
+		function mapClick(){
+			location.href = "https://m.place.naver.com/restaurant/1277055271/location?selected=false&subtab=location";
+		};
+		
+	</script>
 </head>
 <body>
 	
@@ -73,7 +80,7 @@
   <div class="container-fluid">
 	<div class="row">
 	<div class="col-xs-4 col-md-4" style="background-color:lavender; height:100px;">Reservation</div>
-	<div class="col-xs-4 col-md-4" style="background-color:lavenderblush; height:100px;"><img src="resouces/img/MapImg.png" alt="MapImg.png"></div>
+	<div class="col-xs-4 col-md-4" style="background-color:lavenderblush; height:100px;"><img id="mapImg" onclick="mapClick();" src="resouces/img/MapImg.png" alt="MapImg.png"></div>
 	<div class="col-xs-4 col-md-4" style="background-color:lavender;height:100px;">Gallery</div>
 	</div>
 	</div>
