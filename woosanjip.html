@@ -26,9 +26,9 @@
 	}
 	.header{
 		max-width:100%;
-		height:10%;	
+		max-height:10%;	
 	}
-	.header-img{
+	.headerLogo{
 		float:left;
 		max-width:25%;
 		/*height:35px;*/
@@ -43,11 +43,22 @@
 		padding-top:8px;
                 float:left;
 	}
+	
+	.headerImg{
+	        width:12.5%; 
+		max-height:100%;
+		margin:0px 5px 0px 0px;
+	}
 
 	.slidesImg{
-		max-width:35%;
-		max-height:100%;	
+		max-width:100%;
+		max-height:35%;	
 	}
+	.mySlideImg{
+	
+	}
+	
+	
 	.contentImg
 	{
 		max-width:100%;
@@ -69,10 +80,10 @@
 	}
 	.footer{
 		color:white;
-		width:100%;
-		height:auto;
+		max-width:100%;
+		max-height:10%;
 		text-align:center;
-		font-size:0.8em;
+		font-size:0.8rem;
 		padding-top:10px;
 	}
 	
@@ -136,11 +147,11 @@
 <body>
 	
 	<div class="header">
-		<img class="header-img" src="resouces/img/headerLogo.jpg" alt="headerLogo.jpg">
+		<img class="headerLogo" src="resouces/img/headerLogo.jpg" alt="headerLogo.jpg">
 		<div class="headerTxt"><b>Welcome to WSJ</b></div>
 		<!--<div class="headerMenu">-->
-			<a href="https://www.instagram.com/p/B3Rm3GvBD2v/"><img src="resouces/img/instaImg.png" alt="instaImg.png" style="width:35px; height:35px; margin:0 auto;"></a>
-			<a href="https://band.us/band/77323401"><img src="resouces/img/bandImg.jpg" alt="bandImg.jpg" style="width:35px; height:35px; margin:0px 0px 0px 5px; padding:1px;"></a>
+			<a href="https://www.instagram.com/p/B3Rm3GvBD2v/"><img class="headerImg" src="resouces/img/instaImg.png" alt="instaImg.png"></a>
+			<a href="https://band.us/band/77323401"><img class="headerImg" src="resouces/img/bandImg.jpg" alt="bandImg.jpg"></a>
 		<!--</div>-->
 	</div>
 
@@ -150,17 +161,17 @@
 
 		<div class="mySlides fade">
 		  
-		  <img class="mySlideImg" src="resouces/img/slide1.jpg" alt="slide1" style="width:100%; height:200px;">
+		  <img class="mySlideImg" src="resouces/img/slide1.jpg" alt="slide1">
 		</div>
 
 		<div class="mySlides fade">
 		  
-		  <img class="mySlideImg" src="resouces/img/slide2.jpg" alt="slide2" style="width:100%; height:200px;">
+		  <img class="mySlideImg" src="resouces/img/slide2.jpg" alt="slide2">
 		</div>
 
 		<div class="mySlides fade">
 		  
-		  <img class="mySlideImg" src="resouces/img/slide3.jpg" alt="slide3" style="width:100%; height:200px;">
+		  <img class="mySlideImg" src="resouces/img/slide3.jpg" alt="slide3">
 		</div>
 
 	</div>
