@@ -20,47 +20,53 @@
 		background-color:#000000;
 		height: 100vmax; width: 100vmax;		
 	}
-	.header,  .header-img, .headerTxt, .headerMenu, .contentImg{
+	.header,  .header-img, .headerTxt, .contentImg{
 		box-sizing:border-box;
 		margin:0 auto;
 	}
+	.header{
+		max-width:100%;
+		height:10%;	
+	}
 	.header-img{
 		float:left;
-		width:25%;
-		height:35px;
-		
+		max-width:25%;
+		/*height:35px;*/
+		max-height:100%;
 	}
 	.headerTxt{
 		
-		width:50%;
-		height:35px;
+		max-width:50%;
+		max-height:100%;
 		text-align:center;
 		color:white;
 		padding-top:8px;
                 float:left;
 	}
-.headerMenu{
-		width:25%;
-		height:35px;
-		float:left;
-}
+
+	.slidesImg{
+		max-width:35%;
+		max-height:100%;	
+	}
 	.contentImg
 	{
 		max-width:100%;
 		display:block;
 		margin:0 auto;
-		height:auto;
+		height:40%;
 	}
 	
 	
 	.sub-menu{
-		height:auto; 
+		height:10%; 
 		padding:10px 0px 10px 0px;
 		align:center;
 		text-align:center;
 		font-weight:bold;
 	}
-	
+	.contentMenu{
+		height:35%;	
+	}
 	.footer{
 		color:white;
 		width:100%;
@@ -140,7 +146,7 @@
 
 	
 	<!-- 슬라이드 이미지 시작 -->
-	<div class="img-responsive">
+	<div class="img-responsive slidesImg">
 
 		<div class="mySlides fade">
 		  
@@ -169,7 +175,7 @@
 	
 	<!-- 슬라이드 이미지 끝 -->
 	<!-- 외국어 메뉴 시작-->
-	<div class="btn-group btn-group-justified" style="height:42px;">
+	<div class="btn-group btn-group-justified contentMenu" style="height:42px;">
 		  <a href="https://m.naver.com" style="background-color:#343A40; border:#000000;" class="btn btn-primary">English</a>
 		  <a href="https://www.daum.net" style="background-color:#343A40; border:#000000;" class="btn btn-primary">汉 语</a>
 		  <a href="https://www.google.com" style="background-color:#343A40; border:#000000" class="btn btn-primary">日本語</a>
