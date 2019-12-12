@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-   	<meta name="viewport" content="width=device-width, initial-scale=1">
+   	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	
 	<title>Welcome to WSJ</title>
 	
@@ -16,79 +16,65 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
+	*{
+		
+	}
 	body{
-		background-color:#000000;
-		height: 100vh; width: 100vw;		
-	}
-	.header,  .headerLogo, .headerTxt, .headerImg, .contentImg{
-		box-sizing:border-box;
-		margin:0 auto;
-	}
-	.header{
 		width:100vw;
-		height:10vh;	
+		height:100vh;
+		background-color:black;
 	}
 	.headerLogo{
-		float:left;
 		width:25vw;
-		/*height:35px;*/
 		height:10vh;
 	}
 	.headerTxt{
-		
 		width:50vw;
 		height:10vh;
+		color:white;
+		font-size:1.2rem;
+		color:white;
+		padding: 0.9rem;
+		text-align:center;
+	}
+	.headerImg{
+		width: calc(25vw/2);
+		height:10vh;
+				
+	}
+	
+	.col-xs-12{
+		width:100vw;
+		height:50vh;
+	
+	}
+	
+	
+	.btnStyle{
+		background-color:#343A40;
+		border:#000000;
+		height:10vh;
 		text-align:center;
 		color:white;
-		padding-top:8px;
-                float:left;
+		font-size:1.2rem;
+		padding: 0.9rem 0px 0px 0px;
 	}
-	
-	.headerImg{
-	        width:12.5vw; 
-		height:10vh;
-		margin:0px 5px 0px 0px;
-	}
-
-	.slidesImg{
-		width:100vw;
-		height:40vh;	
-	}
-	.mySlideImg{
-
-	}
-	
-	
-	.contentImg
-	{
-		width:100vw;
-		display:block;
-		margin:0 auto;
-		height:35vh;
-	}
-	
 	
 	.sub-menu{
-		height:10vh; 
-		padding:10px 0px 10px 0px;
-		align:center;
+		height:20vh;
 		text-align:center;
-		font-weight:bold;
-	}
-	.contentMenu{
-		height:35%;	
-	}
-	.footer{
-		color:white;
-		max-width:100%;
-		max-height:10%;
-		text-align:center;
-		font-size:0.8rem;
-		padding-top:10px;
 	}
 	
+	.footer{
+		height:10vh;
+		color: white;
+		font-size: 1.0rem;
+	}
+	
+	
+	
 	<!-- 슬라이드 이미지 시작-->
-.mySlides {display: none;}
+.mySlides {display: none; height:80vh;}
 .mySlideImg {vertical-align: middle;}
 
 /* The dots/bullets/indicators */
@@ -146,34 +132,38 @@
 </head>
 <body>
 	
-	<div class="header">
-		<img class="headerLogo" src="resouces/img/headerLogo.jpg" alt="headerLogo.jpg">
-		<div class="headerTxt"><b>Welcome to WSJ</b></div>
-		<!--<div class="headerMenu">-->
+	<div class="row">
+		<div class="col-xs-3">
+			<img class="headerLogo" src="resouces/img/headerLogo.jpg" alt="headerLogo.jpg">
+		</div>
+		<div class="headerTxt col-xs-6"><b>Welcome to WSJ</b></div>
+		<div class="col-xs-3">
 			<a href="https://www.instagram.com/p/B3Rm3GvBD2v/"><img class="headerImg" src="resouces/img/instaImg.png" alt="instaImg.png"></a>
 			<a href="https://band.us/band/77323401"><img class="headerImg" src="resouces/img/bandImg.jpg" alt="bandImg.jpg"></a>
-		<!--</div>-->
+		</div>
 	</div>
 
 	
 	<!-- 슬라이드 이미지 시작 -->
-	<div class="img-responsive slidesImg">
+	<div class="row">
+		<div class="img-responsive slidesImg">
 
-		<div class="mySlides fade">
-		  
-		  <img class="mySlideImg" src="resouces/img/slide1.jpg" alt="slide1">
+			<div class="mySlides fade  col-xs-12">
+			  
+			  <img class="mySlideImg" src="resouces/img/slide1.jpg" alt="slide1">
+			</div>
+
+			<div class="mySlides fade  col-xs-12">
+			  
+			  <img class="mySlideImg" src="resouces/img/slide2.jpg" alt="slide2">
+			</div>
+
+			<div class="mySlides fade  col-xs-12">
+			  
+			  <img class="mySlideImg" src="resouces/img/slide3.jpg" alt="slide3">
+			</div>
+
 		</div>
-
-		<div class="mySlides fade">
-		  
-		  <img class="mySlideImg" src="resouces/img/slide2.jpg" alt="slide2">
-		</div>
-
-		<div class="mySlides fade">
-		  
-		  <img class="mySlideImg" src="resouces/img/slide3.jpg" alt="slide3">
-		</div>
-
 	</div>
 		<br>
 
@@ -186,21 +176,34 @@
 	
 	<!-- 슬라이드 이미지 끝 -->
 	<!-- 외국어 메뉴 시작-->
-	<div class="btn-group btn-group-justified contentMenu" style="height:42px;">
-		  <a href="https://m.naver.com" style="background-color:#343A40; border:#000000;" class="btn btn-primary">English</a>
-		  <a href="https://www.daum.net" style="background-color:#343A40; border:#000000;" class="btn btn-primary">汉 语</a>
-		  <a href="https://www.google.com" style="background-color:#343A40; border:#000000" class="btn btn-primary">日本語</a>
+	<div class="row">
+	<a href="https://m.naver.com">
+	<div class="col-xs-4 btnStyle">
+		  English
+	</div>
+	</a>
+	<a href="https://www.daum.net">
+	<div class="col-xs-4 btnStyle borderStyle">
+		  汉 语
+	</div>
+	</a>
+	<a href="https://www.google.com">
+	<div class="col-xs-4 btnStyle">
+		  日本語
+	</div>
+	</a>
+	
 	</div>
 	<!-- 외국어 메뉴 끝-->
 	
  	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-4 col-md-4 sub-menu" style="background-color:#dcdcfe; color:#660066;"><img class="contentImg" onclick="rsvClick();" src="resouces/img/rsvImg.png" alt="rsvImg.png">Reservation</div>
-			<div class="col-xs-4 col-md-4 sub-menu" style="background-color:#dcffdc; color:#003300;"><img class="contentImg" onclick="mapClick();" src="resouces/img/mapAddrImg.png" alt="mapAddrImg.png">Location</div>
-			<div class="col-xs-4 col-md-4 sub-menu" style="background-color:#dcdcfe; color:#660066;"><img class="contentImg" onclick="galClick();" src="resouces/img/galImg.png" alt="galImg.png">Photos</div>
+			<div class="col-xs-4 sub-menu" style="background-color:#dcdcfe; color:#660066;"><img class="contentImg" onclick="rsvClick();" src="resouces/img/rsvImg.png" alt="rsvImg.png">Reservation</div>
+			<div class="col-xs-4 sub-menu" style="background-color:#dcffdc; color:#003300;"><img class="contentImg" onclick="mapClick();" src="resouces/img/mapAddrImg.png" alt="mapAddrImg.png">Location</div>
+			<div class="col-xs-4 sub-menu" style="background-color:#dcdcfe; color:#660066;"><img class="contentImg" onclick="galClick();" src="resouces/img/galImg.png" alt="galImg.png">Photos</div>
 		</div>
 	</div>
-	<div class="footer">
+	<div class="footer col-xs-12">
 		Address : 63, Bujeon-ro, Busanjin-gu, Busan, Republic of Korea
 	</div>
 	<script>
