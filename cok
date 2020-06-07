@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Play Cok</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  *{
+    box-sizing: border-box;
+  }
+
+  html{
+      background-color: black;
+  }
+
+  .circle{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+    background-color:aquamarine;
+    position:absolute;
+    
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.circle').css({top:0, left:0});
+
+        var size = {
+          width : window.innerWidth,
+          height : window.innerHeight
+        }
+
+        $('#circle').click(function(e){
+        
+       
+        var xmax = document.getElementById('circle').clientWidth;
+        var ymax = document.getElementById('circle').clientHeight;
+        var xpos = Math.floor(Math.random() * (size.width - xmax));
+        var ypos = Math.floor(Math.random() * (size.height - ymax));
+        var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
+        $(this).css({posiotion : 'absolute'});
+        $(this).css({top:ypos, left:xpos});
+        alert(colorCode);
+        if(colorCode == '#000000'){
+          $(this).css('backgroundColor','#FFFFFF');
+        }else{
+          $(this).css('backgroundColor',colorCode);
+        }
+        
+      });
+    });
+  
+  
+    
+</script>
+</head>
+<body>
+    <div id="circle" class="circle"></div>
+</body>
+</html>
