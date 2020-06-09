@@ -25,7 +25,8 @@
 <script>
     $(document).ready(function(){
         $('.wrap').css({posiotion : 'relative'});
-        $('.circle').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:ypos, left:xpos});
+        $('.circle').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:0, left:0});
+        $('.circle').attr('src','./resouces/img/cok1.png');
 
         var size = {
           width : window.innerWidth,
@@ -64,7 +65,7 @@
 </head>
 <body>
   <div id="wrap" class="wrap">
-    <img id="circle" src="./resouces/img/cok1.png" style="border-radius:15px;" alt="이미지가 없습니다"/>
+    <img id="circle" alt="이미지가 없습니다"/>
   </div>
 </body>
 </html>
