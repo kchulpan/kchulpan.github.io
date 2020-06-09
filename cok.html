@@ -36,8 +36,8 @@
         $('#circle').click(function(e){
         
        
-        var xmax = document.getElementById('circle').clientWidth;
-        var ymax = document.getElementById('circle').clientHeight;
+        var xmax = document.getElementById('circle').width;
+        var ymax = document.getElementById('circle').height;
         var xpos = Math.floor(Math.random() * (size.width - xmax));
         var ypos = Math.floor(Math.random() * (size.height - ymax));
         var imgNum = Math.floor(Math.random() * 6) + 1;
