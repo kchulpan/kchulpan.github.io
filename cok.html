@@ -34,16 +34,14 @@
         $('#circle').click(function(e){
         
        
-        var xmax = document.getElementById('circle').width;
-        var ymax = document.getElementById('circle').height;
+        var xmax = document.getElementById('circle').clientWidth;
+        var ymax = document.getElementById('circle').clientHeight;
         var xpos = Math.floor(Math.random() * (size.width - xmax));
         var ypos = Math.floor(Math.random() * (size.height - ymax));
-        var imgNum = Math.floor(Math.random() * 7);
+        var imgNum = Math.floor(Math.random() * 9);
         //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
         $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
-        $(this).css('border-radius', '15px');
-        $(this).css({posiotion : 'absolute'});
-        $(this).css({top:ypos, left:xpos});
+        $(this).css('display', 'inline').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:ypos, left:xpos});
 
 
         /*
@@ -62,7 +60,8 @@
 </script>
 </head>
 <body>
-    <!--<div id="circle" class="circle"></div>-->
+  <div id="wrap" class="wrap">
     <img id="circle" src="./resouces/img/cok1.png" alt="이미지가 없습니다"/>
+  </div>
 </body>
 </html>
