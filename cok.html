@@ -38,14 +38,21 @@
         var ymax = document.getElementById('circle').clientHeight;
         var xpos = Math.floor(Math.random() * (size.width - xmax));
         var ypos = Math.floor(Math.random() * (size.height - ymax));
-        var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
+        var imgNum = Math.floor(Math.random() * 9);
+        //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
+        $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
+        $(this).css('border-radius', '15px');
         $(this).css({posiotion : 'absolute'});
         $(this).css({top:ypos, left:xpos});
+
+
+        /*
         if(colorCode == '#000000'){
           $(this).css('backgroundColor','#FFFFFF');
         }else{
           $(this).css('backgroundColor',colorCode);
         }
+        */
         
       });
     });
@@ -55,6 +62,7 @@
 </script>
 </head>
 <body>
-    <div id="circle" class="circle"></div>
+    <!--<div id="circle" class="circle"></div>-->
+    <img id="circle" src="" alt="이미지가 없습니다"/>
 </body>
 </html>
