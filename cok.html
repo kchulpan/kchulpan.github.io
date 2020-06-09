@@ -25,7 +25,7 @@
 <script>
     $(document).ready(function(){
         $('#circle').attr('src','./resouces/img/cok1.png');
-        $('#circle').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:0, left:0});
+        $('#circle').css('border-radius', '15px').css({'posiotion' : 'absolute'}).css({top:0, left:0});
         
 
         var size = {
@@ -44,8 +44,8 @@
         //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
         $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
         $(this).css('border-radius', '15px');
-        $(this).css({posiotion : 'absolute'});
-        $(this).css({top:ypos, left:xpos});
+        $(this).css({'position' : 'absolute'});
+        $(this).css({'top':'ypos', 'left':'xpos'});
 
 
         /*
