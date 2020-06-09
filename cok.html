@@ -25,8 +25,9 @@
 <script>
     $(document).ready(function(){
         $('.wrap').css({posiotion : 'relative'});
-        $('.circle').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:0, left:0});
         $('.circle').attr('src','./resouces/img/cok1.png');
+        $('.circle').css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:0, left:0});
+        
 
         var size = {
           width : window.innerWidth,
@@ -38,8 +39,8 @@
        
         var xmax = document.getElementById('circle').clientWidth;
         var ymax = document.getElementById('circle').clientHeight;
-        var xpos = Math.floor(Math.random() * (size.width - xmax + 1));
-        var ypos = Math.floor(Math.random() * (size.height - ymax + 1));
+        var xpos = Math.floor(Math.random() * (size.width - xmax)) + 1;
+        var ypos = Math.floor(Math.random() * (size.height - ymax)) + 1;
         var imgNum = Math.floor(Math.random() * 9);
         //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
         $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
