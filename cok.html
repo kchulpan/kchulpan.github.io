@@ -36,8 +36,10 @@
        
         var xmax = document.getElementById('circle').clientWidth;
         var ymax = document.getElementById('circle').clientHeight;
-        var xpos = Math.floor(Math.random() * (size.width - xmax));
-        var ypos = Math.floor(Math.random() * (size.height - ymax));
+        //var xpos = Math.floor(Math.random() * (size.width - xmax));
+        //var ypos = Math.floor(Math.random() * (size.height - ymax));
+        var xpos = Math.floor(Math.random() * (size.width - 100));
+        var ypos = Math.floor(Math.random() * (size.height - 100));
         var imgNum = Math.floor(Math.random() * 7);
         //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
         $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
