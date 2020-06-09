@@ -42,7 +42,9 @@
         var imgNum = Math.floor(Math.random() * 9);
         //var colorCode = '#' + Math.round(Math.random() * 0xffffff).toString(16);
         $(this).attr('src', './resouces/img/cok'+imgNum+'.png');
-        $(this).css('border-radius', '15px').css({posiotion : 'absolute'}).css({top:ypos, left:xpos});
+        $(this).css('border-radius', '15px');
+        $(this).css({posiotion : 'absolute'});
+        $(this).css({top:ypos, left:xpos});
 
 
         /*
@@ -62,7 +64,7 @@
 </head>
 <body>
   <div id="wrap" class="wrap">
-    <img id="circle" src="./resouces/img/cok1.png" alt="이미지가 없습니다"/>
+    <img id="circle" src="./resouces/img/cok1.png" style="border-radius:15px;" alt="이미지가 없습니다"/>
   </div>
 </body>
 </html>
