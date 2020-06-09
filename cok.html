@@ -11,6 +11,14 @@
   html{
       background-color: black;
   }
+ 
+ .score{
+  color : white;
+  size : 14px;
+  width : 30px;
+  height : 30px;
+  border : solid gray 1px;
+ }
 
   .circle{
     width:100px;
@@ -20,6 +28,8 @@
     position:absolute;
     
   }
+ 
+ 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -32,8 +42,12 @@
           width : window.innerWidth,
           height : window.innerHeight
         }
-
+        var score = document.getElementById('score');
+        var cnt = 0;
         $('#circle').click(function(e){
+        
+         cnt++;
+         score.innerHTML = cnt;
         
        
         var xmax = document.getElementById('circle').width;
@@ -62,6 +76,7 @@
 </script>
 </head>
 <body>
+  <div id="score" class="score"></div> 
   <div id="wrap" class="wrap" style="position:relative;">
     <img id="circle" alt="이미지가 없습니다"/>
   </div>
