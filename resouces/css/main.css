@@ -1,8 +1,11 @@
 .topMenu {
   padding : 5px;
+  border-radius: 5px;
   text-decoration : none;
 }
-
+.topMenu:hover{
+  border : 1px solid black;
+}
 .clrRed {
   color:white;
   background-color:#d20000;
