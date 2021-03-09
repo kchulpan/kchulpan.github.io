@@ -1,5 +1,6 @@
 .topMenu {
   padding : 5px;
+  text-decoration : none;
 }
 
 .clrRed {
