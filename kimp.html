@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>업비트(upbit) 시세조회</title>
+    <title>업비트(upbit)/바이낸스 시세조회</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet"
     	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
@@ -27,14 +27,30 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-    function comma(str) {
-        str = String(str);
-        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+
+    $(document).ready(function(){
+
+    
+    var dollarRate = 0;
+    function setExRate(){
+      $.ajax({
+        url: "https://api.manana.kr/exchange/rate/KRW/USD.json",
+        dataType: "json"
+      }).done(function(exRate){
+        
+       dollarRate = exRate[0].rate;
+       //dollarRate = 1111.70;
+        
+      }) // end done(function(markets){
+      .fail(function(){
+        alert("환율 API 접근 중 에러.")})
+        setTimeout(setExRate, 10*1000*6*10);
     }
+
     function setUpbitData(){
         $("#table_ticker > tbody > tr").remove();
             var innerHtml = '';
-            var dollarRate = 0;
+            
             var upbitPrice = 0;
             var bnncPrice = 0;
           $.ajax({
@@ -49,17 +65,7 @@
         $("#tmp").text( "업비트 접근 중 에러." );
       })
 
-      $.ajax({
-        url: "https://api.manana.kr/exchange/rate/KRW/USD.json",
-        dataType: "json"
-      }).done(function(exRate){
-        
-       dollarRate = exRate[0].rate;
-       //dollarRate = 1111.70;
-        
-      }) // end done(function(markets){
-      .fail(function(){
-        alert("환율 API 접근 중 에러.")})
+      
 
       $.ajax({
         url: "https://api.binance.com/api/v3/ticker/price",
@@ -75,6 +81,7 @@
                 innerHtml += "<td>" + bnncPrice+"</td>"
                 innerHtml += "<td>" + kimp+"%</td>"
                 innerHtml += "</tr>";
+                $("#table_ticker > tbody > tr").remove();
                 $("#table_ticker > tbody:last").append(innerHtml);
             }
         }
@@ -86,8 +93,10 @@
       setTimeout(setUpbitData, 10000);
     }
     $(function() {
+      setExRate()
       setUpbitData();
     });
+  });
     </script>
   </head>
   <body>
