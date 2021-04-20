@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>업비트(upbit) 시세조회</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet"
+    	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    	crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" />
+    <style>
+      body{
+        color:silver;
+      }
+      table{
+          width:50%;
+          max-width:50%;
+          margin-bottom:20px;
+         
+      }
+      td{
+        border:1px solid black;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+    function setUpbitData(){
+        $("#table_ticker > tbody > tr").remove();
+            var innerHtml = '';
+            var dollarRate = 0;
+            var upbitPrice = 0;
+            var bnncPrice = 0;
+          $.ajax({
+          url: "https://api.upbit.com/v1/ticker?markets=KRW-XRP",
+          dataType: "json"
+        }).done(function(tickers){
+            upbitPrice = tickers[0].trade_price;
+            innerHtml = "<tr>";
+            innerHtml += "<td>" + upbitPrice +"</td>";
+        }).fail(function(){
+        //alert("업비트 API 접근 중 에러.")}
+        $("#tmp").text( "업비트 접근 중 에러." );
+      })
+
+      $.ajax({
+        url: "https://api.manana.kr/exchange/rate/KRW/USD.json",
+        dataType: "json"
+      }).done(function(exRate){
+        
+       dollarRate = exRate[0].rate;
+       //dollarRate = 1111.70;
+        
+      }) // end done(function(markets){
+      .fail(function(){
+        alert("환율 API 접근 중 에러.")})
+
+      $.ajax({
+        url: "https://api.binance.com/api/v3/ticker/price",
+        dataType: "json"
+      }).done(function(bnncmarkets){
+        let arr_bnnc_markets = "";
+        let arr_bnnc_name = [];
+        for(var i = 0; i < bnncmarkets.length;i++){ 
+            let kimp = 0;  
+            if(bnncmarkets[i].symbol == 'XRPUSDT'){
+                bnncPrice = Math.floor(bnncmarkets[i].price*dollarRate*100)/100;
+                kimp = Math.floor(((upbitPrice/bnncPrice)-1)*100);
+                innerHtml += "<td>" + bnncPrice+"</td>"
+                innerHtml += "<td>" + kimp+"%</td>"
+                innerHtml += "</tr>";
+                $("#table_ticker > tbody:last").append(innerHtml);
+            }
+        }
+        
+      }) // end done(function(markets){
+      .fail(function(){
+        alert("바이낸스 API 접근 중 에러.")})
+        //$("#tmp").text( "API 접근 중 에러." );
+      setTimeout(setUpbitData, 10000);
+    }
+    $(function() {
+      setUpbitData();
+    });
+    </script>
+  </head>
+  <body>
+    <div id='tmp' style="color:pink;">
+    </div>
+    <br /><br />
+    <table id="table_ticker" style="color:black;" class="table-hover text-center">
+      <thead>
+      <tr>
+        <td>업비트/리플</td>
+        <td>바이낸스/리플</td>
+        <td>김프</td>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <br /><br /><br />
+    <div id='tmp2'>
+
+    </div>
+  </body>
+</html>
