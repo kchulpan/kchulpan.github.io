@@ -48,9 +48,6 @@
     }
 
     function setUpbitData(){
-        $("#table_ticker > tbody > tr").remove();
-            var innerHtml = '';
-            
             var upbitPrice = 0;
             var bnncPrice = 0;
           $.ajax({
@@ -58,8 +55,6 @@
           dataType: "json"
         }).done(function(tickers){
             upbitPrice = tickers[0].trade_price;
-            innerHtml = "<tr>";
-            innerHtml += "<td>" + upbitPrice +"</td>";
         }).fail(function(){
         //alert("업비트 API 접근 중 에러.")}
         $("#tmp").text( "업비트 접근 중 에러." );
@@ -73,24 +68,25 @@
       }).done(function(bnncmarkets){
         let arr_bnnc_markets = "";
         let arr_bnnc_name = [];
+        let kimp = 0; 
         for(var i = 0; i < bnncmarkets.length;i++){ 
-            let kimp = 0;  
+             
             if(bnncmarkets[i].symbol == 'XRPUSDT'){
                 bnncPrice = Math.floor(bnncmarkets[i].price*dollarRate*100)/100;
-                kimp = Math.floor(((upbitPrice/bnncPrice)-1)*100);
-                innerHtml += "<td>" + bnncPrice+"</td>"
-                innerHtml += "<td>" + kimp+"%</td>"
-                innerHtml += "</tr>";
-                $("#table_ticker > tbody > tr").remove();
-                $("#table_ticker > tbody:last").append(innerHtml);
+                kimp = ((parseFloat(upbitPrice.toFixed(2)/bnncPrice)-1)*100).toFixed(2);
             }
         }
-        
+        $(".fadeIn").fadeOut(500, function(){
+            $("#upbit").html(upbitPrice+'원');
+            $("#binance").html(bnncPrice+'원');
+            $("#kimp").html(kimp+'%');
+        });
+        $(".fadeIn").fadeIn(500);
       }) // end done(function(markets){
       .fail(function(){
         alert("바이낸스 API 접근 중 에러.")})
         //$("#tmp").text( "API 접근 중 에러." );
-      setTimeout(setUpbitData, 10000);
+      setTimeout(setUpbitData, 3000);
     }
     $(function() {
       setExRate()
@@ -109,6 +105,11 @@
         <td>업비트/리플</td>
         <td>바이낸스/리플</td>
         <td>김프</td>
+      </tr>
+      <tr>
+        <td><span id="upbit" class="fadeIn"></span></td>
+        <td><span id="binance" class="fadeIn"></span></td>
+        <td><sapn id="kimp" class="fadeIn"></sapn></td>
       </tr>
       </thead>
       <tbody>
