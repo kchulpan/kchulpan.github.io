@@ -68,7 +68,8 @@
       }).done(function(bnncmarkets){
         let arr_bnnc_markets = "";
         let arr_bnnc_name = [];
-        let kimp = 0; 
+        let kimp = 0;
+        let inputKimp = parseFloat($('#inputKimp').val());
         for(var i = 0; i < bnncmarkets.length;i++){ 
              
             if(bnncmarkets[i].symbol == 'XRPUSDT'){
@@ -77,6 +78,15 @@
             }
         }
         $(".fadeIn").fadeOut(500, function(){
+            if(inputKimp == null ||inputKimp == ''){
+                $('#kimp').css('color', 'black');
+            }else{
+                if(inputKimp <= kimp){
+                    $('#kimp').css('color', 'red');
+                }else{
+                    $('#kimp').css('color', 'black');
+                }
+            }
             $("#upbit").html(upbitPrice+'원');
             $("#binance").html(bnncPrice+'원');
             $("#kimp").html(kimp+'%');
@@ -98,6 +108,7 @@
   <body>
     <div id='tmp' style="color:pink;">
     </div>
+    <input id="inputKimp" type="number" placeholder="원하는 김프 % 입력"/>%(김프가 입력값 이상이면 <span style="color:red;">빨간색</span> 표시)
     <br /><br />
     <table id="table_ticker" style="color:black;" class="table-hover text-center">
       <thead>
