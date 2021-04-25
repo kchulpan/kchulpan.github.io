@@ -32,43 +32,6 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
-    function initFirebase(serviceWorkRegistration) {
-
-      //Instance ID Token 발급 요청
-      messaging.getToken()
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log('[InstanceID Token] 발행완료: ', currentToken);
-            sendTokenToServer(currentToken); //Token을 서버로 전송
-          }
-          else {
-            console.log('[InstanceID Token] 발행실패');
-            sendTokenToServer(null);
-          }
-        })
-        .catch((err) => {
-          console.log('[InstanceID Token] 발행오류: ', err);
-          sendTokenToServer(null);
-        });
-
-      //Instance ID Token 변경 시 호출되는 이벤트
-      messaging.onTokenRefresh(() => {
-        messaging.getToken().then((refreshedToken) => {
-          console.log('[InstanceID Token] 갱신완료', refreshedToken);
-          sendTokenToServer(refreshedToken); //Token을 서버로 전송
-        })
-          .catch((err) => {
-            console.log('[InstanceID Token] 갱신실패', err);
-            sendTokenToServer(null);
-          });
-      });
-
-      messaging.onMessage((payload) => {
-        //Push Message 수신 시 호출되는 이벤트
-        console.log('[PushMessage] 수신: ', payload);
-      });
-    }
-
 
     //발급된 Instance ID Token을 서버에 전송
     function sendTokenToServer(token) {
@@ -216,23 +179,61 @@
   <script>
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-      apiKey: "AIzaSyCSmhuXDmZ1K8eohpNC5ahVKqcMwA2VNDE",
-      authDomain: "webpush-6a653.firebaseapp.com",
-      projectId: "webpush-6a653",
-      storageBucket: "webpush-6a653.appspot.com",
-      messagingSenderId: "368973565637",
-      appId: "1:368973565637:web:8df5ad17cf2d3fab5aaaac",
-      measurementId: "G-TFWVTPC929"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    function initFirebase(serviceWorkRegistration){
 
-    //Messaging 서비스 활성화
-    var messaging = firebase.messaging();
-    messaging.useServiceWorker(serviceWorkRegistration);
-    messaging.usePublicVapidKey("BFhUT4UEhJkjrxQ6eLzexqSLBfh11tetfuwoY1lalPQRmbl93TIRHaHj6yDHWlce0CRx-ikg8lK96B37ndVjtm4");
+      var firebaseConfig = {
+        apiKey: "AIzaSyCSmhuXDmZ1K8eohpNC5ahVKqcMwA2VNDE",
+        authDomain: "webpush-6a653.firebaseapp.com",
+        projectId: "webpush-6a653",
+        storageBucket: "webpush-6a653.appspot.com",
+        messagingSenderId: "368973565637",
+        appId: "1:368973565637:web:8df5ad17cf2d3fab5aaaac",
+        measurementId: "G-TFWVTPC929"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+  
+      //Messaging 서비스 활성화
+      var messaging = firebase.messaging();
+      messaging.useServiceWorker(serviceWorkRegistration);
+      messaging.usePublicVapidKey("BFhUT4UEhJkjrxQ6eLzexqSLBfh11tetfuwoY1lalPQRmbl93TIRHaHj6yDHWlce0CRx-ikg8lK96B37ndVjtm4");
+
+      
+      //Instance ID Token 발급 요청
+      messaging.getToken()
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log('[InstanceID Token] 발행완료: ', currentToken);
+            sendTokenToServer(currentToken); //Token을 서버로 전송
+          }
+          else {
+            console.log('[InstanceID Token] 발행실패');
+            sendTokenToServer(null);
+          }
+        })
+        .catch((err) => {
+          console.log('[InstanceID Token] 발행오류: ', err);
+          sendTokenToServer(null);
+        });
+
+      //Instance ID Token 변경 시 호출되는 이벤트
+      messaging.onTokenRefresh(() => {
+        messaging.getToken().then((refreshedToken) => {
+          console.log('[InstanceID Token] 갱신완료', refreshedToken);
+          sendTokenToServer(refreshedToken); //Token을 서버로 전송
+        })
+          .catch((err) => {
+            console.log('[InstanceID Token] 갱신실패', err);
+            sendTokenToServer(null);
+          });
+      });
+
+      messaging.onMessage((payload) => {
+        //Push Message 수신 시 호출되는 이벤트
+        console.log('[PushMessage] 수신: ', payload);
+      });
+    }
   </script>
   <div id='tmp' style="color:pink;">
   </div>
