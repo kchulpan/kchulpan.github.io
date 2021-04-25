@@ -1,117 +1,138 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>업비트(upbit)/바이낸스 시세조회</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet"
-    	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    	crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" />
-    <style>
-      body{
-        color:silver;
-      }
-      table{
-          width:50%;
-          max-width:50%;
-          margin-bottom:20px;
-         
-      }
-      td{
-        border:1px solid black;
-      }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
 
-    $(document).ready(function(){
-
-    
-    var dollarRate = 0;
-    function setExRate(){
-      $.ajax({
-        url: "https://api.manana.kr/exchange/rate/KRW/USD.json",
-        dataType: "json"
-      }).done(function(exRate){
-        
-       dollarRate = exRate[0].rate;
-       //dollarRate = 1111.70;
-        
-      }) // end done(function(markets){
-      .fail(function(){
-        alert("환율 API 접근 중 에러.")})
-        setTimeout(setExRate, 10*1000*6*10);
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>업비트(upbit)/바이낸스 시세조회</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" />
+  <style>
+    body {
+      color: silver;
     }
 
-    function setUpbitData(){
-            var upbitPrice = 0;
-            var bnncPrice = 0;
-          $.ajax({
+    table {
+      width: 50%;
+      max-width: 50%;
+      margin-bottom: 20px;
+
+    }
+
+    td {
+      border: 1px solid black;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+      var isServiceWorkerSupported = 'serviceWorker' in navigator;
+      if (isServiceWorkerSupported)
+      {
+        //브라우저에 Service Worker를 등록
+        navigator.serviceWorker.register('service-worker.js', { scope: '/'})
+          .then(function(registration)
+          {
+            console.log('[ServiceWorker] 등록 성공: ', registration.scope);
+          })
+          .catch(function(err)
+          {
+            console.log('[ServiceWorker] 등록 실패: ', err);
+          });
+      }
+
+
+    $(document).ready(function () {
+
+
+      var dollarRate = 0;
+      function setExRate() {
+        $.ajax({
+          url: "https://api.manana.kr/exchange/rate/KRW/USD.json",
+          dataType: "json"
+        }).done(function (exRate) {
+
+          dollarRate = exRate[0].rate;
+          //dollarRate = 1111.70;
+
+        }) // end done(function(markets){
+          .fail(function () {
+            alert("환율 API 접근 중 에러.")
+          })
+        setTimeout(setExRate, 10 * 1000 * 6 * 10);
+      }
+
+      function setUpbitData() {
+        var upbitPrice = 0;
+        var bnncPrice = 0;
+        $.ajax({
           url: "https://api.upbit.com/v1/ticker?markets=KRW-XRP",
           dataType: "json"
-        }).done(function(tickers){
-            upbitPrice = tickers[0].trade_price;
-        }).fail(function(){
-        //alert("업비트 API 접근 중 에러.")}
-        $("#tmp").text( "업비트 접근 중 에러." );
-      })
+        }).done(function (tickers) {
+          upbitPrice = tickers[0].trade_price;
+        }).fail(function () {
+          //alert("업비트 API 접근 중 에러.")}
+          $("#tmp").text("업비트 접근 중 에러.");
+        })
 
-      
 
-      $.ajax({
-        url: "https://api.binance.com/api/v3/ticker/price",
-        dataType: "json"
-      }).done(function(bnncmarkets){
-        let arr_bnnc_markets = "";
-        let arr_bnnc_name = [];
-        let kimp = 0;
-        let inputKimp = parseFloat($('#inputKimp').val());
-        for(var i = 0; i < bnncmarkets.length;i++){ 
-             
-            if(bnncmarkets[i].symbol == 'XRPUSDT'){
-                bnncPrice = Math.floor(bnncmarkets[i].price*dollarRate*100)/100;
-                kimp = ((parseFloat(upbitPrice.toFixed(2)/bnncPrice)-1)*100).toFixed(2);
+
+        $.ajax({
+          url: "https://api.binance.com/api/v3/ticker/price",
+          dataType: "json"
+        }).done(function (bnncmarkets) {
+          let arr_bnnc_markets = "";
+          let arr_bnnc_name = [];
+          let kimp = 0;
+          let inputKimp = parseFloat($('#inputKimp').val());
+          for (var i = 0; i < bnncmarkets.length; i++) {
+
+            if (bnncmarkets[i].symbol == 'XRPUSDT') {
+              bnncPrice = Math.floor(bnncmarkets[i].price * dollarRate * 100) / 100;
+              kimp = ((parseFloat(upbitPrice.toFixed(2) / bnncPrice) - 1) * 100).toFixed(2);
             }
-        }
-        $(".fadeIn").fadeOut(500, function(){
-            if(inputKimp == null ||inputKimp == ''){
+          }
+          $(".fadeIn").fadeOut(500, function () {
+            if (inputKimp == null || inputKimp == '') {
+              $('#kimp').css('color', 'black');
+            } else {
+              if (inputKimp <= kimp) {
+                $('#kimp').css('color', 'red');
+              } else {
                 $('#kimp').css('color', 'black');
-            }else{
-                if(inputKimp <= kimp){
-                    $('#kimp').css('color', 'red');
-                }else{
-                    $('#kimp').css('color', 'black');
-                }
+              }
             }
-            $("#upbit").html(upbitPrice+'원');
-            $("#binance").html(bnncPrice+'원');
-            $("#kimp").html(kimp+'%');
-        });
-        $(".fadeIn").fadeIn(500);
-      }) // end done(function(markets){
-      .fail(function(){
-        alert("바이낸스 API 접근 중 에러.")})
+            $("#upbit").html(upbitPrice + '원');
+            $("#binance").html(bnncPrice + '원');
+            $("#kimp").html(kimp + '%');
+          });
+          $(".fadeIn").fadeIn(500);
+        }) // end done(function(markets){
+          .fail(function () {
+            alert("바이낸스 API 접근 중 에러.")
+          })
         //$("#tmp").text( "API 접근 중 에러." );
-      setTimeout(setUpbitData, 3000);
-    }
-    $(function() {
-      setExRate()
-      setUpbitData();
+        setTimeout(setUpbitData, 3000);
+      }
+      $(function () {
+        setExRate()
+        setUpbitData();
+      });
     });
-  });
-    </script>
-  </head>
-  <body>
-    <div id='tmp' style="color:pink;">
-    </div>
-    <input id="inputKimp" type="number" placeholder="원하는 김프 % 입력"/>%(김프가 입력값 이상이면 <span style="color:red;">빨간색</span> 표시)
-    <br /><br />
-    <table id="table_ticker" style="color:black;" class="table-hover text-center">
-      <thead>
+  </script>
+</head>
+
+<body>
+  <div id='tmp' style="color:pink;">
+  </div>
+  <input id="inputKimp" type="number" placeholder="원하는 김프 % 입력" />%(김프가 입력값 이상이면 <span style="color:red;">빨간색</span> 표시)
+  <br /><br />
+  <table id="table_ticker" style="color:black;" class="table-hover text-center">
+    <thead>
       <tr>
         <td>업비트/리플</td>
         <td>바이낸스/리플</td>
@@ -120,15 +141,18 @@
       <tr>
         <td><span id="upbit" class="fadeIn"></span></td>
         <td><span id="binance" class="fadeIn"></span></td>
-        <td><sapn id="kimp" class="fadeIn"></sapn></td>
+        <td>
+          <sapn id="kimp" class="fadeIn"></sapn>
+        </td>
       </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-    <br /><br /><br />
-    <div id='tmp2'>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <br /><br /><br />
+  <div id='tmp2'>
 
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>
