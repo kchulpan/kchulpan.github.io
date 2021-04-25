@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>업비트(upbit)/바이낸스 시세조회</title>
+  <!-- manifest 참조추가 -->
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
@@ -30,20 +32,97 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
-      var isServiceWorkerSupported = 'serviceWorker' in navigator;
-      if (isServiceWorkerSupported)
-      {
-        //브라우저에 Service Worker를 등록
-        navigator.serviceWorker.register('service-worker.js', { scope: '/'})
-          .then(function(registration)
-          {
-            console.log('[ServiceWorker] 등록 성공: ', registration.scope);
-          })
-          .catch(function(err)
-          {
-            console.log('[ServiceWorker] 등록 실패: ', err);
+    function initFirebase(serviceWorkRegistration) {
+
+      //Instance ID Token 발급 요청
+      messaging.getToken()
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log('[InstanceID Token] 발행완료: ', currentToken);
+            sendTokenToServer(currentToken); //Token을 서버로 전송
+          }
+          else {
+            console.log('[InstanceID Token] 발행실패');
+            sendTokenToServer(null);
+          }
+        })
+        .catch((err) => {
+          console.log('[InstanceID Token] 발행오류: ', err);
+          sendTokenToServer(null);
+        });
+
+      //Instance ID Token 변경 시 호출되는 이벤트
+      messaging.onTokenRefresh(() => {
+        messaging.getToken().then((refreshedToken) => {
+          console.log('[InstanceID Token] 갱신완료', refreshedToken);
+          sendTokenToServer(refreshedToken); //Token을 서버로 전송
+        })
+          .catch((err) => {
+            console.log('[InstanceID Token] 갱신실패', err);
+            sendTokenToServer(null);
           });
-      }
+      });
+
+      messaging.onMessage((payload) => {
+        //Push Message 수신 시 호출되는 이벤트
+        console.log('[PushMessage] 수신: ', payload);
+      });
+    }
+
+
+    //발급된 Instance ID Token을 서버에 전송
+    function sendTokenToServer(token) {
+      return fetch('/api/save-token/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: token
+        })
+        .then(function (response) {
+          if (!response.ok)
+            console.log('[InstanceID Token] 서버전송 실패: ', response);
+          else
+            console.log('[InstanceID Token] 서버전송 완료: ', response);
+
+          return response.json();
+        })
+        .then(function (responseData) {
+          if (!(responseData && responseData.Success))
+            console.log('[InstanceID Token] 서버전송 응답(실패): ', responseData);
+          else
+            console.log('[InstanceID Token] 서버전송 응답(성공): ', responseData);
+        });
+    }
+
+
+    var isServiceWorkerSupported = 'serviceWorker' in navigator;
+    if (isServiceWorkerSupported) {
+      //브라우저에 Service Worker를 등록
+      navigator.serviceWorker.register('service-worker.js', { scope: '/' })
+        .then(function (registration) {
+          console.log('[ServiceWorker] 등록 성공: ', registration.scope);
+
+          //Firebase 초기화
+          initFirebase(registration);
+        })
+        .catch(function (err) {
+          console.log('[ServiceWorker] 등록 실패: ', err);
+        });
+    }
+
+    var isNotificationSupported = 'Notification' in window;
+    if (isNotificationSupported) {
+      Notification.requestPermission().then(function (result) {
+        if (result === 'granted') {
+          console.log('[Notification] 허용: ', result);
+        }
+        else {
+          console.log('[Notification] 차단: ', result);
+        }
+      });
+    }
 
 
     $(document).ready(function () {
@@ -127,9 +206,38 @@
 </head>
 
 <body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyCSmhuXDmZ1K8eohpNC5ahVKqcMwA2VNDE",
+      authDomain: "webpush-6a653.firebaseapp.com",
+      projectId: "webpush-6a653",
+      storageBucket: "webpush-6a653.appspot.com",
+      messagingSenderId: "368973565637",
+      appId: "1:368973565637:web:8df5ad17cf2d3fab5aaaac",
+      measurementId: "G-TFWVTPC929"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    //Messaging 서비스 활성화
+    var messaging = firebase.messaging();
+    messaging.useServiceWorker(serviceWorkRegistration);
+    messaging.usePublicVapidKey("BFhUT4UEhJkjrxQ6eLzexqSLBfh11tetfuwoY1lalPQRmbl93TIRHaHj6yDHWlce0CRx-ikg8lK96B37ndVjtm4");
+  </script>
   <div id='tmp' style="color:pink;">
   </div>
-  <input id="inputKimp" type="number" placeholder="원하는 김프 % 입력" />%(김프가 입력값 이상이면 <span style="color:red;">빨간색</span> 표시)
+  <input id="inputKimp" type="number" placeholder="원하는 김프 % 입력" />%
+  <br />(김프가 입력값 이상이면 <span style="color:red;">빨간색</span> 표시)
   <br /><br />
   <table id="table_ticker" style="color:black;" class="table-hover text-center">
     <thead>
