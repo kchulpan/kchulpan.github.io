@@ -32,6 +32,7 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+     var alertCnt = 0;
     window.onload = function () {
             if (window.Notification) {
                 Notification.requestPermission();
@@ -41,15 +42,19 @@
         function calculate() {
             setTimeout(function () {
                 notify();
-            }, 3000);
+            }, 1000);
         }
  
         function notify() {
+         
             if (Notification.permission !== 'granted') {
                 alert('notification is disabled');
             }
             else {
-              alert('경훈아 상승중이다 멘탈잡아라~!!ㅋㅋㅋ')
+              if(alertCnt == 0){
+                alert('경훈아 상승중이다 멘탈잡아라~!!ㅋㅋㅋ');
+                alertCnt++;
+              }
                 var notification = new Notification('경훈아 상승중이다!!!', {
                     icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
                     body: '멘탈잡아라ㅋㅋ',
