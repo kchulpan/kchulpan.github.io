@@ -33,6 +33,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
      var alertCnt = 0;
+     var alarmCnt = 0;
     window.onload = function () {
             if (window.Notification) {
                 Notification.requestPermission();
@@ -55,6 +56,7 @@
                 alert('경훈아 상승중이다 멘탈잡아라~!!ㅋㅋㅋ');
                 alertCnt++;
               }
+              if(alarmCnt == 1){
                 var notification = new Notification('경훈아 상승중이다!!!', {
                     icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
                     body: '멘탈잡아라ㅋㅋ',
@@ -63,6 +65,7 @@
                 notification.onclick = function () {
                     window.open('http://google.com');
                 };
+              }
             }
         }
     
@@ -123,9 +126,11 @@
             } else {
               if (inputKimp <= kimp) {
                 $('#kimp').css('color', 'red');
+                alarmCnt = 1;
                 calculate();
               } else {
                 $('#kimp').css('color', 'black');
+                alarmCnt = 0;
               }
             }
             $("#upbit").html(upbitPrice + '원');
